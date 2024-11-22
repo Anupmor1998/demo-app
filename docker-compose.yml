@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  react-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173" # Map container port 5173 to localhost:5173
+    volumes:
+      - ./:/usr/src/app # Mount current directory to the container's working directory
+      - /usr/src/app/node_modules # Mount node_modules to prevent overwriting inside the container
+    environment:
+      - CHOKIDAR_USEPOLLING=true # Ensure hot-reloading works inside Docker
+      - WATCHPACK_POLLING=true   # Alternative polling option for Vite
+    stdin_open: true
+    tty: true
